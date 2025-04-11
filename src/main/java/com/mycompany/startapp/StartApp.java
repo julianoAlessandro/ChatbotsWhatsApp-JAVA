@@ -3,32 +3,45 @@ package com.mycompany.startapp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import com.mycompany.startapp.controller.ZapBot;
 
-@SpringBootApplication
 public class StartApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(StartApp.class, args);
-    }
-
-    @Bean
-    public WebDriver webDriver() {
-        System.out.println("Inicializando o Selenium WebDriver manualmente...");
-
-        // Aponta diretamente para o chromedriver.exe
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Juliano\\Desktop\\DriverGoogle\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.setHeadless(false); // true = sem interface gráfica
+
+        // Removemos o modo headless para que o navegador seja visível
+        options.addArguments("--start-maximized");
+        //options.addArguments("--no-sandbox");
+        //options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+
+        // O "--disable-gpu" pode causar crash em algumas máquinas com headless desativado
+        // então vamos comentar por segurança:
+        // options.addArguments("--disable-gpu");
+
+        // Garante que esse diretório existe e está acessível (ou cria antes de rodar)
+        options.addArguments("--user-data-dir=C:/zap-data");
 
         WebDriver driver = new ChromeDriver(options);
-        driver.get("https://web.whatsapp.com/");
 
-        System.out.println("WebDriver iniciado e navegado para o WhatsApp Web.");
+        try {
+            System.out.println("Abrindo WhatsApp Web...");
+            driver.get("https://web.whatsapp.com");
 
-        return driver;
+            // Espera tempo suficiente pro usuário escanear o QR Code se necessário
+            Thread.sleep(15000); // você pode aumentar esse tempo se quiser
+
+            ZapBot bot = new ZapBot(driver);
+            bot.enviarMensagem("Ivan", "Olá Ivan! Esta é uma mensagem automática enviada pelo bot");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // driver.quit(); // Descomente se quiser fechar o navegador após o envio
+        }
     }
 }
