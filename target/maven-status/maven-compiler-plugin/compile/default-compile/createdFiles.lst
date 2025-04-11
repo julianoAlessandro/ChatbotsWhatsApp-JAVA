@@ -1,0 +1,3 @@
+com\mycompany\startapp\StartApp.class
+com\mycompany\startapp\controller\EnviaMensagem.class
+com\mycompany\startapp\model\Mensagem.class
