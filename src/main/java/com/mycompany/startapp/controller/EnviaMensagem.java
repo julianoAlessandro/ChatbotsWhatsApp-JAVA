@@ -1,18 +1,20 @@
 package com.mycompany.startapp.controller;
 
 import com.mycompany.startapp.model.Mensagem;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping(value = "/zap-zap")  //endpoint endereço da aplicação
-@Slf4j
+@RequestMapping(value = "/zap-zap")  // endpoint da aplicação
 public class EnviaMensagem {
+
+    private static final Logger log = LoggerFactory.getLogger(EnviaMensagem.class);
 
     @Autowired
     private WebDriver webDriver;
@@ -24,7 +26,6 @@ public class EnviaMensagem {
             return;
         }
 
-        // Compatível com Java 8
         if (mensagem.getConteudo() == null || mensagem.getConteudo().trim().isEmpty()) {
             log.warn("Mensagem vazia.");
             return;
@@ -51,7 +52,7 @@ public class EnviaMensagem {
      */
     private WebElement findContato(String nomeContato) {
         String xPathContato = "//*[@id=\"pane-side\"]//span[@title='" + nomeContato + "']";
-        log.info("Procurando contato: " + nomeContato);
+        log.info("Procurando contato: {}", nomeContato);
         return webDriver.findElement(By.xpath(xPathContato));
     }
 

@@ -1,7 +1,5 @@
 package com.mycompany.startapp;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,20 +8,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@Slf4j
 public class StartApp {
 
     public static void main(String[] args) {
         SpringApplication.run(StartApp.class, args);
-        System.out.println("oi");
-        
     }
 
     @Bean
     public WebDriver webDriver() {
-        log.info("Inicializando o Selenium WebDriver com WebDriverManager...");
+        System.out.println("Inicializando o Selenium WebDriver manualmente...");
 
-        WebDriverManager.chromedriver().setup();
+        // Aponta diretamente para o chromedriver.exe
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\Juliano\\Desktop\\DriverGoogle\\chromedriver.exe");
 
         ChromeOptions options = new ChromeOptions();
         options.setHeadless(false); // true = sem interface gráfica
@@ -31,13 +27,7 @@ public class StartApp {
         WebDriver driver = new ChromeDriver(options);
         driver.get("https://web.whatsapp.com/");
 
-        // Manter o navegador aberto por um tempo (16 minutos)
-        try {
-            Thread.sleep(1000 * 60 * 16);
-        } catch (InterruptedException e) {
-            log.error("Thread interrompida", e);
-            Thread.currentThread().interrupt();
-        }
+        System.out.println("WebDriver iniciado e navegado para o WhatsApp Web.");
 
         return driver;
     }
