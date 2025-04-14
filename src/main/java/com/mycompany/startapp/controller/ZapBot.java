@@ -53,20 +53,27 @@ public class ZapBot {
            //--------------encaminhar arquivo pdf------------------------
            
           // Passo 1: Clicar no clipe
-         WebElement attachBtn = wait.until(ExpectedConditions.elementToBeClickable(
-         By.cssSelector("div[role='button'][tabindex='0'] > span[data-icon='clip']")));
-         attachBtn.click();
-         System.out.println("Clicando no clipe..");
+     
 
-          // Passo 2: Upload de documento
+        // Espera o rodapé aparecer primeiro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("footer")));
+
+       // Só então tenta pegar o botão do clipe
+       WebElement clipButton = wait.until(ExpectedConditions.elementToBeClickable(
+       By.cssSelector("footer button span[data-icon='clip']")
+       ));
+      clipButton.click();
+      System.out.println("Botão de anexo clicado com sucesso.");
+
+       // Passo 2: Upload de documento
           String caminho = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
          WebElement documentInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-          By.cssSelector("input[type='file']")));
+          By.cssSelector("By.xpath(\"//footer//button//span[@data-icon='clip']\")")));
           documentInput.sendKeys(caminho); // Caminho do arquivo local
           System.out.println("Procurando o arquivo no local de destino");
 
         // Passo 3: Esperar botão de enviar aparecer
-        WebElement sendBtn = wait.until(ExpectedConditions.elementToBeClickable(
+       WebElement sendBtn = wait.until(ExpectedConditions.elementToBeClickable(
        By.xpath("//span[@data-icon='send']")));
        sendBtn.click();            
        System.out.println("Arquivo enviado com sucesso");   

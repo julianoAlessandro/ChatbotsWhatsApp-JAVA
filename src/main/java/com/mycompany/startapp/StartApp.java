@@ -14,14 +14,8 @@ public class StartApp {
         ChromeOptions options = new ChromeOptions();
 
       
-        options.addArguments("--window-position=0,1000");
-        //options.addArguments("--no-sandbox");
-        //options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
-
-        // O "--disable-gpu" pode causar crash em algumas máquinas com headless desativado
-        // então vamos comentar por segurança:
-        // options.addArguments("--disable-gpu");
+       // options.addArguments("--window-position=0,1000");
+       options.addArguments("--remote-allow-origins=*");
 
         // Garante que esse diretório existe e está acessível (ou cria antes de rodar)
         options.addArguments("--user-data-dir=C:/zap-data");
@@ -32,8 +26,8 @@ public class StartApp {
             System.out.println("Abrindo WhatsApp Web...");
             driver.get("https://web.whatsapp.com");
 
-            // Espera tempo suficiente pro usuário escanear o QR Code se necessário
-            Thread.sleep(15000); // você pode aumentar esse tempo se quiser
+           
+            Thread.sleep(15000);
 
             ZapBot bot = new ZapBot(driver);
             
