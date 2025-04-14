@@ -13,8 +13,8 @@ public class StartApp {
 
         ChromeOptions options = new ChromeOptions();
 
-        // Removemos o modo headless para que o navegador seja visível
-        options.addArguments("--start-maximized");
+      
+        options.addArguments("--window-position=0,1000");
         //options.addArguments("--no-sandbox");
         //options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--remote-allow-origins=*");
@@ -36,7 +36,8 @@ public class StartApp {
             Thread.sleep(15000); // você pode aumentar esse tempo se quiser
 
             ZapBot bot = new ZapBot(driver);
-            bot.enviarMensagem("Ivan", "Olá Ivan! Esta é uma mensagem automática enviada pelo bot");
+            
+            bot.enviarMensagem("Juliano", "Mensagem automatica testada com o chrome aberto simultaneamente  pelo usuario e uma instancia aberta pelo driver" + System.currentTimeMillis());
 
         } catch (Exception e) {
             e.printStackTrace();

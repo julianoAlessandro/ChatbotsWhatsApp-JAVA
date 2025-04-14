@@ -1,5 +1,2 @@
-com\mycompany\startapp\controller\ZapBot.class
-com\mycompany\startapp\model\Mensagem.class
 com\mycompany\startapp\StartApp.class
-com\mycompany\startapp\controller\EnviaMensagem.class
-com\mycompany\startapp\AbrirGoogle.class
+com\mycompany\startapp\controller\ZapBot.class
