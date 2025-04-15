@@ -31,7 +31,7 @@ public class StartApp {
 
             ZapBot bot = new ZapBot(driver);
             String caminhoArquivo = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
-            bot.enviarMensagem("Juliano", "Bom dia luis  o vencimento do sistema vence dia 17/04 abaixo segue o boleto para pagamento !!!" + System.currentTimeMillis());
+            bot.enviarMensagem("Guilherme Paulino Ribeiro", "Bom dia guiii  o vencimento do sistema vence dia 17/04 abaixo segue o boleto para pagamento !!!" );
             bot.encaminharPDF(caminhoArquivo);
             
             
