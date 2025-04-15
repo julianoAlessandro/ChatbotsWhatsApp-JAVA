@@ -14,7 +14,7 @@ public class StartApp {
         ChromeOptions options = new ChromeOptions();
 
       
-       // options.addArguments("--window-position=0,1000");
+       options.addArguments("--window-position=0,1000");
        options.addArguments("--remote-allow-origins=*");
 
         // Garante que esse diretório existe e está acessível (ou cria antes de rodar)
@@ -31,7 +31,7 @@ public class StartApp {
 
             ZapBot bot = new ZapBot(driver);
             
-            bot.enviarMensagem("Juliano", "Mensagem automatica testada com o chrome aberto simultaneamente  pelo usuario e uma instancia aberta pelo driver" + System.currentTimeMillis());
+            bot.enviarMensagem("Juliano", "Bom dia luis  o vencimento do sistema vence dia 17/04 abaixo segue o boleto para pagamento !!!" + System.currentTimeMillis());
 
         } catch (Exception e) {
             e.printStackTrace();

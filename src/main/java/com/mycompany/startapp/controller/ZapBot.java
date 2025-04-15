@@ -6,21 +6,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.Keys;
-import java.time.Duration;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 
 public class ZapBot {
 
-    private final WebDriver driver; //driver que garante a conexao com o chrome
+    private final WebDriver driver;
 
-    public ZapBot(WebDriver driver) {  
-        this.driver = driver; // referencia que esse atributo faz parte dessa classe
+    public ZapBot(WebDriver driver) {
+        this.driver = driver;
     }
+
     public void enviarMensagem(String contato, String mensagem) {
-           WebDriverWait wait = new WebDriverWait(driver, 40); // <-- usa long ao invés de Duration
-         
+     WebDriverWait wait = new WebDriverWait(driver, 40); // 40 segundos
+
         try {
             // Passo 1: Buscar o contato
             WebElement campoBusca = wait.until(ExpectedConditions.visibilityOfElementLocated(
@@ -29,8 +30,7 @@ public class ZapBot {
             Thread.sleep(500);
             campoBusca.sendKeys(contato);
             System.out.println("Contato digitado: " + contato);
-
-            Thread.sleep(3000); // aguarda resultados aparecerem
+            Thread.sleep(3000);
 
             // Passo 2: Clicar na conversa
             WebElement conversa = wait.until(ExpectedConditions.elementToBeClickable(
@@ -38,47 +38,49 @@ public class ZapBot {
             conversa.click();
             System.out.println("Conversa aberta com: " + contato);
 
-            // Passo 3: Digitar a mensagem
-           WebElement campoMensagem = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//div[@contenteditable='true' and @data-tab='10']")));
+            // Passo 3: Digitar e enviar a mensagem
+            WebElement campoMensagem = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//div[@contenteditable='true' and @data-tab='10']")));
             campoMensagem.click();
             Thread.sleep(700);
             campoMensagem.sendKeys(mensagem);
             System.out.println("Mensagem digitada: " + mensagem);
-           
-              //encaminhar a mensagem
-              campoMensagem.sendKeys(Keys.ENTER);
-              Thread.sleep(500);
-              System.out.println("Mensagem enviada com sucesso para: " + contato);
-           //--------------encaminhar arquivo pdf------------------------
-           
-          // Passo 1: Clicar no clipe
-     
+            campoMensagem.sendKeys(Keys.ENTER);
+            Thread.sleep(500);
+            System.out.println("Mensagem enviada com sucesso para: " + contato);
 
-        // Espera o rodapé aparecer primeiro
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.tagName("footer")));
-
-       // Só então tenta pegar o botão do clipe
-       WebElement clipButton = wait.until(ExpectedConditions.elementToBeClickable(
-       By.cssSelector("footer button span[data-icon='clip']")
-       ));
-      clipButton.click();
-      System.out.println("Botão de anexo clicado com sucesso.");
-
-       // Passo 2: Upload de documento
-          String caminho = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
-         WebElement documentInput = wait.until(ExpectedConditions.presenceOfElementLocated(
-          By.cssSelector("By.xpath(\"//footer//button//span[@data-icon='clip']\")")));
-          documentInput.sendKeys(caminho); // Caminho do arquivo local
-          System.out.println("Procurando o arquivo no local de destino");
-
-        // Passo 3: Esperar botão de enviar aparecer
-       WebElement sendBtn = wait.until(ExpectedConditions.elementToBeClickable(
-       By.xpath("//span[@data-icon='send']")));
-       sendBtn.click();            
-       System.out.println("Arquivo enviado com sucesso");   
-             
+        //------------ Passo 4: Enviar arquivo PDF------------------------//
           
+
+           driver.findElement(By.xpath("//*[@id='main']/footer/div[1]/div/span/div/div[1]/div/button/span")).click();
+           System.out.println("Clicando no ícone de anexar...");
+           driver.findElement(By.xpath("//*[@id=\"app\"]/div/span[5]/div/ul/div/div/div[1]/li/div/span")).click();
+           System.out.println("Clicando no documento..");
+              // Localiza o input de envio de arquivos (geralmente tipo 'file')
+           WebElement inputFile = driver.findElement(By.cssSelector("input[type='file']"));
+
+           // Caminho completo do arquivo (ex: C:\Users\Juliano\Documents\arquivo.pdf)
+           String caminhoArquivo = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
+           inputFile.sendKeys(caminhoArquivo);
+
+           System.out.println("PDF carregado.");
+
+          // Aguarda aparecer o botão de envio
+        WebElement botaoEnviar = wait.until(ExpectedConditions.elementToBeClickable(
+          By.xpath("//div[@role='button'][@aria-label='Enviar']") // esse texto pode variar dependendo da linguagem do WhatsApp Web
+          ));
+
+          // Clica para enviar o PDF
+          botaoEnviar.click();
+
+          System.out.println("PDF enviado com sucesso!");
+          Robot robot = new Robot();
+          robot.keyPress(KeyEvent.VK_ESCAPE);
+          robot.keyRelease(KeyEvent.VK_ESCAPE);
+
+
+           
+
 
         } catch (Exception e) {
             e.printStackTrace();
