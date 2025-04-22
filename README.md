@@ -6,12 +6,10 @@ Este projeto tem como objetivo desenvolver um **chatbot automatizado para envio 
 
 A aplicação foi desenvolvida utilizando **Java 8**, seguindo o padrão de arquitetura **MVC (Model-View-Controller)**, e com versionamento controlado por meio de **branches de testes no GitHub** para garantir estabilidade e organização durante o desenvolvimento.
 
----
 
 ## ⚙️ Tecnologias Utilizadas
 
 - Java 8
-- Spring Boot
 - Selenium WebDriver
 - Maven
 - Git & GitHub
@@ -19,7 +17,6 @@ A aplicação foi desenvolvida utilizando **Java 8**, seguindo o padrão de arqu
 - WhatsApp Web (via automação)
 - Arquitetura MVC
 
----
 
 ## 🚀 Como Executar o Projeto
 
