@@ -21,24 +21,12 @@ public class StartApp {
         options.addArguments("--user-data-dir=C:/zap-data");
 
         WebDriver driver = new ChromeDriver(options);
-
-        try {
-            System.out.println("Abrindo WhatsApp Web...");
-            driver.get("https://web.whatsapp.com");
-
-           
-            Thread.sleep(15000);
-
-            ZapBot bot = new ZapBot(driver);
-            String caminhoArquivo = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
-            bot.enviarMensagem("Guilherme Paulino Ribeiro", "Bom dia guiii  o vencimento do sistema vence dia 17/04 abaixo segue o boleto para pagamento !!!" );
-            bot.encaminharPDF(caminhoArquivo);
+        ZapBot bot = new ZapBot(driver);
+        String caminhoArquivo = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
+        bot.enviarMensagem("5519981860527", "Bom dia subindo arquivos com o numero da pessoa em vez do NOME !!!" );
+        bot.encaminharPDF(caminhoArquivo);
             
             
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // driver.quit(); // Descomente se quiser fechar o navegador após o envio
-        }
+      
     }
 }

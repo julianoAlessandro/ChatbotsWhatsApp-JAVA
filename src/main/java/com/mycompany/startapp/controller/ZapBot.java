@@ -31,41 +31,33 @@ public class ZapBot {
         this.atalho = temp;
     }
 
-    
+   public void enviarMensagem(String numeroComDDD, String mensagem) {
+    try {
+        // Abre o chat direto via URL do WhatsApp com o número completo (com DDI e DDD)
+        String url = "https://web.whatsapp.com/send?phone=" + numeroComDDD;
+        driver.get(url);
 
-    public void enviarMensagem(String contato, String mensagem) {
-        try {
-            // Passo 1: Buscar o contato
-            WebElement campoBusca = esperar.until(ExpectedConditions.visibilityOfElementLocated(
-            By.xpath("//div[@contenteditable='true'][@data-tab='3']")));
-            campoBusca.click();
-            Thread.sleep(500);
-            campoBusca.sendKeys(contato);
-            System.out.println("Contato digitado: " + contato);
-            Thread.sleep(3000);
+        System.out.println("Abrindo conversa com: " + numeroComDDD);
 
-            // Passo 2: Clicar na conversa
-            WebElement conversa = esperar.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//span[@title='" + contato + "']")));
-            conversa.click();
-            System.out.println("Conversa aberta com: " + contato);
+        // Espera o campo de digitação da mensagem estar disponível
+        WebElement campoMensagem = esperar.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//div[@contenteditable='true' and @data-tab='10']")));
 
-            // Passo 3: Digitar e enviar a mensagem
-            WebElement campoMensagem = esperar.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//div[@contenteditable='true' and @data-tab='10']")));
-            campoMensagem.click();
-            Thread.sleep(700);
-            campoMensagem.sendKeys(mensagem);
-            System.out.println("Mensagem digitada: " + mensagem);
-            campoMensagem.sendKeys(Keys.ENTER);
-            Thread.sleep(500);
-            System.out.println("Mensagem enviada com sucesso para: " + contato);
-          
-             } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Erro ao tentar enviar mensagem para: " + contato);
-        }
+        // Digita a mensagem e envia
+        campoMensagem.sendKeys(mensagem);
+        Thread.sleep(700);
+        campoMensagem.sendKeys(Keys.ENTER);
+
+        System.out.println("Mensagem enviada com sucesso para: " + numeroComDDD);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        System.out.println("Erro ao tentar enviar mensagem para: " + numeroComDDD);
     }
+}
+ 
+
+   
     
     public void encaminharPDF(String caminhoArquivo){
         driver.findElement(By.xpath("//*[@id='main']/footer/div[1]/div/span/div/div[1]/div/button/span")).click();
