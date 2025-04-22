@@ -23,7 +23,7 @@ public class StartApp {
         WebDriver driver = new ChromeDriver(options);
         ZapBot bot = new ZapBot(driver);
         String caminhoArquivo = "C:\\Users\\Juliano\\Documents\\NetBeansProjects\\StartApp\\Arquivos\\documento.pdf";
-        bot.enviarMensagem("5519981860527", "Bom dia subindo arquivos com o numero da pessoa em vez do NOME !!!" );
+        bot.enviarMensagem("xxxxxx", "Bom dia subindo arquivos com o numero da pessoa em vez do NOME !!!" );
         bot.encaminharPDF(caminhoArquivo);
             
             
